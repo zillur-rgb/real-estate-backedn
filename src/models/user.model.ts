@@ -20,7 +20,6 @@ const userSchema = new Schema<IUser>(
     },
     profileImg: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true },
