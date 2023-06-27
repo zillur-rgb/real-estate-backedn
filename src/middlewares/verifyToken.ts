@@ -27,7 +27,9 @@ const verifyJwt = async (
   const token = authHeader?.split(' ')[1]
   try {
     const payload = jwt.verify(token, config.jwtSecret as string) as JwtPayload
-    req.body.user = { userId: payload.userId }
+
+    req.body.user = payload.id
+
     next()
   } catch (error) {
     sendResponse(res, {
