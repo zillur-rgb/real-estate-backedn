@@ -5,20 +5,14 @@ import { IProperty } from '../types/property.interface'
 
 // ==== GET ALL PROPERTIES ====
 const getAll = async (): Promise<IProperty[]> => {
-  const properties = await Property.find({}).populate(
-    'currentOwner',
-    '-password',
-  )
+  const properties = await Property.find()
 
   return properties
 }
 
 // ==== GET FEATURED ====
 const getFeatured = async (): Promise<IProperty[]> => {
-  const featuredProperties = await Property.find({ featured: true }).populate(
-    'currentOwner',
-    '-password',
-  )
+  const featuredProperties = await Property.find({ featured: true })
 
   return featuredProperties
 }
@@ -28,15 +22,26 @@ const getAllFromType = async (type: string): Promise<IProperty[]> => {
   let properties = []
 
   if (type) {
-    properties = await Property.find({ type: type }).populate(
-      'owner',
-      '-password',
-    )
+    properties = await Property.find({ type: type })
   } else {
     properties = await Property.find({})
   }
 
   return properties
+}
+// ==== Number of Types of properties ====
+const propertyTypeNum = async () => {
+  const beachType = await Property.countDocuments({ type: 'beach' })
+  console.log('beachType', beachType)
+
+  const mountainType = await Property.countDocuments({ type: 'mountain' })
+  const villageType = await Property.countDocuments({ type: 'village' })
+  const data = {
+    beach: beachType,
+    mountain: mountainType,
+    village: villageType,
+  }
+  return data
 }
 
 // ==== Featch individuals property ====
@@ -138,4 +143,5 @@ export const PropertyService = {
   updateProperty,
   BookmarkProperty,
   deleteProperty,
+  propertyTypeNum,
 }

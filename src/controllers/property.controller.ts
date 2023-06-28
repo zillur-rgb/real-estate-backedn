@@ -28,7 +28,7 @@ const getFeatured = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'All data fetched successfully',
+    message: 'Featured data fetched successfully',
     data: result,
   })
 })
@@ -49,7 +49,31 @@ const getMyProperties = catchAsync(
   },
 )
 
+// ==== Get numbers of different types property ====
+const propertyTypeNum = catchAsync(async (_req: Request, res: Response) => {
+  const result = await PropertyService.propertyTypeNum()
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Number fetched successfully',
+    data: result,
+  })
+})
+
+// ==== Types of Property ====
+
 // ==== Find individual Property ====
+const getAllFromType = catchAsync(async (req: Request, res: Response) => {
+  const result = await PropertyService.getAllFromType(req.params.type)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Properties fetched based on type successfully',
+    data: result,
+  })
+})
 const findSingleProperty = catchAsync(
   async (req: CustomRequest, res: Response) => {
     const result = await PropertyService.singleProperty(req.params.id)
@@ -112,4 +136,6 @@ export const PropertyController = {
   findSingleProperty,
   updateProperty,
   deleteSingleProperty,
+  propertyTypeNum,
+  getAllFromType,
 }

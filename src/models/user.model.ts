@@ -18,7 +18,7 @@ const userSchema = new Schema<IUser>(
       required: true,
       min: 6,
     },
-    profileImg: {
+    country: {
       type: String,
     },
   },
